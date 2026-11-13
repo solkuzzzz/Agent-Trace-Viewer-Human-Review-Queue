@@ -1,0 +1,8 @@
+Поле Langfuse           Поле моего типа
+type: "GENERATION"     Span.kind = "llm_call"
+type: "TOOL"            Span.kind = "tool_call"
+type: "AGENT"             Span.kind = "agent"
+parent_observation_id   Span.parentId
+usage_details.total       Span.tokenTotal
+cost_details.total        Span.cost
+level: "ERROR"             Span.status = "error"
