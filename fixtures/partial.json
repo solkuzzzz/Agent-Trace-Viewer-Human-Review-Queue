@@ -1,0 +1,34 @@
+{
+  "id": "t2",
+  "name": "Partial run",
+  "startTime": 10,
+  "endTime": null,
+  "spans": [
+    {
+      "id": "good", "traceId": "t2", "parentId": null,
+      "kind": "agent", "name": "Good", "startTime": 10, "endTime": 20, "status": "ok"
+    },
+    { "traceId": "t2", "parentId": null, "kind": "span", "name": "Missing id", "startTime": 10, "endTime": 20, "status": "ok" },
+    {
+      "id": "good", "traceId": "t2", "parentId": null,
+      "kind": "agent", "name": "Duplicate", "startTime": 10, "endTime": 20, "status": "ok"
+    },
+    {
+      "id": "odd", "traceId": "wrong", "parentId": null,
+      "kind": "unexpected", "name": "Odd", "startTime": 30, "endTime": 20, "status": "warning"
+    },
+    {
+      "id": "unfinished", "traceId": "t2", "parentId": null,
+      "kind": "span", "name": "Unfinished", "startTime": 40, "endTime": null, "status": "ok"
+    },
+    {
+      "id": "running", "traceId": "t2", "parentId": null,
+      "kind": "span", "name": "Running", "startTime": 50, "endTime": null, "status": "running"
+    }
+  ],
+  "decisions": [
+    { "id": "bad", "spanId": "good", "verdict": "edit", "decidedAt": 19, "decidedBy": "reviewer" },
+    { "id": "orphan", "spanId": "absent", "verdict": "approve", "decidedAt": 21, "decidedBy": "reviewer" },
+    { "spanId": "good", "verdict": "approve", "decidedAt": 22, "decidedBy": "reviewer" }
+  ]
+}

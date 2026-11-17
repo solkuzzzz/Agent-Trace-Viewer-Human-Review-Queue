@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const SpanKindSchema = z
-  .enum(["agent", "llm_call", "tool_call", "retrieval", "event", "span"])
+  .enum(["agent", "llm_call", "tool_call", "retrieval", "generating", "event", "span"])
   .catch("span");
 
 export type SpanKind = z.infer<typeof SpanKindSchema>;
@@ -90,6 +90,6 @@ export const TraceSchema = z
     startTime: z.number(),
     endTime: z.number().nullable(),
     spans: z.array(z.unknown()),
-    decisions: z.array(HumanDecisionSchema).optional().default([]),
+    decisions: z.array(z.unknown()).optional().default([]),
   })
   .passthrough();

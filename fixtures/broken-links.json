@@ -1,0 +1,12 @@
+{
+  "id": "t3",
+  "name": "Broken links",
+  "startTime": 0,
+  "endTime": 100,
+  "spans": [
+    { "id": "a", "traceId": "t3", "parentId": "b", "kind": "span", "name": "A", "startTime": 0, "endTime": 10, "status": "ok" },
+    { "id": "b", "traceId": "t3", "parentId": "a", "kind": "span", "name": "B", "startTime": 10, "endTime": 20, "status": "ok" },
+    { "id": "lost", "traceId": "t3", "parentId": "missing", "kind": "span", "name": "Lost", "startTime": 20, "endTime": 30, "status": "ok" },
+    { "id": "self", "traceId": "t3", "parentId": "self", "kind": "span", "name": "Self", "startTime": 40, "endTime": 50, "status": "ok" }
+  ]
+}

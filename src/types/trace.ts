@@ -17,6 +17,11 @@ export type SpanStatus =
 
 export type RiskTier = "read" | "write" | "execute";
 
+export interface TreeResult {
+  roots: TraceNode[];
+  issues: ParseIssue[];
+}
+
 export interface Usage {
   inputTokens?: number;
   outputTokens?: number;
@@ -95,15 +100,29 @@ export interface Trace {
 export interface ParseIssue {
   severity: "warn" | "error";
   code:
-    | "orphan_span"
-    | "missing_end_time"
-    | "clock_skew"
-    | "unknown_kind"
-    | "unparseable_arguments"
-    | "duplicate_span_id"
-    | "cycle_detected";
+  | "orphan_span"
+  | "missing_end_time"
+  | "clock_skew"
+  | "unknown_kind"
+  | "unparseable_arguments"
+  | "duplicate_span_id"
+  | "cycle_detected"
+  | "invalid_trace"
+  | "invalid_decision"
+  | "missing_edited_arguments"
+  | "trace_id_mismatch"
+  | "orphan_decision"
+  | "invalid_span";
   spanId?: string;
+  spanIndex?: number;
+  decisionIndex?: number;
   detail: string;
+}
+
+export interface ParseResult {
+  trace: Trace | null;
+  issues: ParseIssue[];
+
 }
 
 export interface TraceNode {

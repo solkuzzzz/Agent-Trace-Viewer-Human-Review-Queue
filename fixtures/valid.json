@@ -1,0 +1,34 @@
+{
+  "id": "t1",
+  "name": "Valid run",
+  "startTime": 100,
+  "endTime": 200,
+  "spans": [
+    {
+      "id": "grandchild", "traceId": "t1", "parentId": "child",
+      "kind": "llm_call", "name": "Answer", "startTime": 140, "endTime": 160,
+      "status": "error", "usage": { "inputTokens": 1, "totalTokens": 1 },
+      "cost": { "totalUsd": 0.05 }
+    },
+    {
+      "id": "peer", "traceId": "t1", "parentId": "root",
+      "kind": "tool_call", "name": "Approval", "startTime": 130, "endTime": 190,
+      "status": "awaiting_approval", "usage": { "totalTokens": 4 },
+      "cost": { "totalUsd": 0.3 }
+    },
+    {
+      "id": "child", "traceId": "t1", "parentId": "root",
+      "kind": "agent", "name": "Reasoning", "startTime": 120, "endTime": 180,
+      "status": "ok", "usage": { "inputTokens": 1, "outputTokens": 2 },
+      "cost": { "inputUsd": 0.1, "outputUsd": 0.1 }, "extraField": "kept"
+    },
+    {
+      "id": "root", "traceId": "t1", "parentId": null,
+      "kind": "agent", "name": "Run", "startTime": 100, "endTime": 200,
+      "status": "ok", "usage": { "totalTokens": 2 }, "cost": { "totalUsd": 0.1 }
+    }
+  ],
+  "decisions": [
+    { "id": "d1", "spanId": "peer", "verdict": "approve", "decidedAt": 180, "decidedBy": "reviewer" }
+  ]
+}
