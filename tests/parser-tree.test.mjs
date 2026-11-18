@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import test from "node:test";
 import { parseTrace } from "../src/parser/parser.ts";
 import { treeOfTrace } from "../src/parser/tree.ts";
+import { flattenVisibleTree } from "../src/parser/flatten.ts";
 
 function fixture(name) {
   const url = new URL(`../fixtures/${name}.json`, import.meta.url);
@@ -73,4 +74,17 @@ test("missing parents and cycles remain visible and are reported", () => {
   assert.equal(tree.issues.filter((issue) => issue.code === "orphan_span").length, 1);
   assert.equal(tree.roots[0].containsError, true);
   assert.equal(tree.roots[0].descendantCount, 1);
+});
+
+test("flattening shows roots and only descendants of expanded nodes", () => {
+  const { trace } = parseFixture("valid");
+  const { roots } = treeOfTrace(trace);
+  const ids = (expanded) =>
+    flattenVisibleTree(roots, new Set(expanded)).map((node) => node.span.id);
+
+  assert.deepEqual(ids([]), ["root"]);
+  assert.deepEqual(ids(["child"]), ["root"]);
+  assert.deepEqual(ids(["root"]), ["root", "peer", "child"]);
+  assert.deepEqual(ids(["root", "child"]), ["root", "peer", "child", "grandchild"]);
+  assert.equal(roots[0].children[1].children.length, 1);
 });
